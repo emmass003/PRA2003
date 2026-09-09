@@ -1,5 +1,3 @@
-#README.MD
-
 Biology themed exercise
 Goal to answer the following questions:
 What are the average counts of each molecular species and their statistical uncertainties?
