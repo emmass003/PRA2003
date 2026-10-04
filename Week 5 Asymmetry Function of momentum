@@ -1,0 +1,193 @@
+# PRA2003 - Question 3: asymmetry as a function of momentum
+#
+# For each WT/variant pair, is the asymmetry the same at every momentum,
+# or does it grow, shrink or flip sign as the bacteria move faster?
+#
+# HOW TO RUN:
+#   Put output-Set1.txt ... output-Set10.txt in the same folder as this
+#   script and run it (Rscript momentum_asymmetry.R, or the Run button).
+#   It reads every file once, so it takes about as long as Part 1
+#   (roughly 3-4 minutes per file).
+#
+# WHAT IT DOES:
+#   1. For every bacterium of one of the 12 strains it computes the size
+#      of its momentum:  |p| = sqrt(px^2 + py^2 + pz^2)   [10^-20 kg m/s]
+#   2. It sorts the bacteria into n_bins momentum bins. The bin edges are
+#      chosen automatically from the start of the first file so that each
+#      bin holds roughly the same number of bacteria, and the SAME edges
+#      are then used for every file and every pair.
+#   3. In every data set and every bin it counts WT and variant and computes
+#         A = (N_WT - N_variant) / (N_WT + N_variant)
+#   4. Like Questions 1 and 2, the 10 data sets are the sub-samples:
+#         result      = mean of the 10 values of A
+#         uncertainty = standard deviation of the 10 values of A
+#         significance = A / uncertainty   (significant if >= 3 sigma)
+#   5. To test whether A depends on momentum at all, it compares the bins
+#      with a chi-square test against a constant asymmetry
+#      (p-value < 0.003, i.e. 3 sigma, means A really changes with momentum).
+#
+# OUTPUT:
+#   momentum_asymmetry_results.csv  - A +- SD per pair per momentum bin
+#   momentum_constancy_test.csv     - chi-square test per pair
+#   momentum_counts_per_set.csv     - the raw counts per set, pair and bin
+#   asymmetry_vs_momentum.png       - plot of A vs momentum for each pair
+
+# ---- Settings ----
+file_names <- paste0("output-Set", 1:10, ".txt")
+chunk_size <- 1000000   # lines read at a time
+n_bins     <- 5         # number of momentum bins
+
+# ---- The 6 WT/variant pairs (WT code is positive, variant is the negative code) ----
+pair_codes <- c(211, 321, 2212, 3122, 3312, 3334)
+pair_names <- c("E. coli", "Bacillus subtilis", "Pseudomonas aeruginosa",
+                "Streptococcus pneumoniae", "Mycobacterium tuberculosis",
+                "Salmonella enterica")
+all_codes <- c(pair_codes, -pair_codes)
+n_pairs <- length(pair_codes)
+
+missing_files <- file_names[!file.exists(file_names)]
+if (length(missing_files) > 0) {
+  stop("Can't find: ", paste(missing_files, collapse = ", "),
+       "\nPut the data files in the same folder as this script (working directory: ",
+       getwd(), ").")
+}
+
+# Reads a chunk of lines and returns |p| and code for the bacteria of interest
+parse_chunk <- function(chunk) {
+  split_lines <- strsplit(trimws(chunk), "\\s+")
+  particle_lines <- split_lines[lengths(split_lines) == 4]
+  if (length(particle_lines) == 0) {
+    return(data.frame(p = numeric(0), code = numeric(0)))
+  }
+  m <- matrix(as.numeric(unlist(particle_lines)), ncol = 4, byrow = TRUE)
+  keep <- !is.na(m[, 4]) & m[, 4] %in% all_codes & !is.na(rowSums(m[, 1:3, drop = FALSE]))
+  m <- m[keep, , drop = FALSE]
+  data.frame(p = sqrt(m[, 1]^2 + m[, 2]^2 + m[, 3]^2), code = m[, 4])
+}
+
+# ---- Step 1: choose the momentum bin edges from the start of the first file ----
+con <- file(file_names[1], "r")
+first_chunk <- parse_chunk(readLines(con, n = chunk_size))
+close(con)
+if (nrow(first_chunk) < 100) {
+  stop("Too few bacteria of interest at the start of ", file_names[1], " to choose bins.")
+}
+bin_edges <- signif(quantile(first_chunk$p, probs = seq(0, 1, length.out = n_bins + 1),
+                             names = FALSE), 3)
+bin_edges[1] <- 0            # first bin starts at 0
+bin_edges[n_bins + 1] <- Inf # last bin is open-ended
+bin_labels <- ifelse(is.infinite(bin_edges[-1]),
+                     paste0(">", bin_edges[-(n_bins + 1)]),
+                     paste0(bin_edges[-(n_bins + 1)], "-", bin_edges[-1]))
+cat("Momentum bins (|p|, 10^-20 kg m/s):", paste(bin_labels, collapse = " | "), "\n\n")
+
+# ---- Step 2: count WT and variant per momentum bin in every file ----
+# counts[set, code, bin]
+counts <- array(0, dim = c(length(file_names), length(all_codes), n_bins),
+                dimnames = list(file_names, as.character(all_codes), bin_labels))
+
+start_time <- Sys.time()
+for (s in seq_along(file_names)) {
+  cat("=== Analysing", file_names[s], "-", format(Sys.time(), "%H:%M:%S"), "===\n")
+  con <- file(file_names[s], "r")
+  repeat {
+    chunk <- readLines(con, n = chunk_size)
+    if (length(chunk) == 0) break
+    d <- parse_chunk(chunk)
+    if (nrow(d) == 0) next
+    b <- findInterval(d$p, bin_edges, rightmost.closed = TRUE)
+    tab <- table(factor(d$code, levels = all_codes), factor(b, levels = 1:n_bins))
+    counts[s, , ] <- counts[s, , ] + matrix(as.numeric(tab), nrow = length(all_codes))
+  }
+  close(con)
+}
+cat("\nReading done in", format(round(Sys.time() - start_time, 1)), "\n\n")
+
+# ---- Step 3: asymmetry per set, pair and bin ----
+per_set <- list()
+results <- list()
+constancy <- list()
+
+for (k in seq_len(n_pairs)) {
+  wt  <- counts[, as.character(pair_codes[k]), , drop = FALSE][, 1, ]   # sets x bins
+  var <- counts[, as.character(-pair_codes[k]), , drop = FALSE][, 1, ]
+  wt  <- matrix(wt,  nrow = length(file_names))
+  var <- matrix(var, nrow = length(file_names))
+  A <- (wt - var)   # sets x bins; NaN if a bin is empty in a set
+
+  per_set[[k]] <- data.frame(
+    Set = rep(seq_along(file_names), times = n_bins),
+    Pair = pair_names[k],
+    Bin = rep(seq_len(n_bins), each = length(file_names)),
+    MomentumRange = rep(bin_labels, each = length(file_names)),
+    N_WT = as.vector(wt), N_variant = as.vector(var),
+    A = round(as.vector(A), 6)
+  )
+
+  A_mean <- colMeans(A, na.rm = TRUE)
+  A_sd   <- apply(A, 2, sd, na.rm = TRUE)
+  signif_sigma <- A_mean / A_sd
+
+  results[[k]] <- data.frame(
+    Pair = pair_names[k],
+    Bin = seq_len(n_bins),
+    MomentumRange = bin_labels,
+    N_WT_total = colSums(wt),
+    N_variant_total = colSums(var),
+    A = round(A_mean, 5),
+    Uncertainty = round(A_sd, 5),
+    Significance = round(signif_sigma, 2),
+    Significant = abs(signif_sigma) >= 3
+  )
+
+  # Does A change with momentum? Chi-square against the (weighted) average A.
+  ok <- is.finite(A_mean) & is.finite(A_sd) & A_sd > 0
+  w <- 1 / A_sd[ok]^2
+  A_const <- sum(w * A_mean[ok]) / sum(w)
+  chi2 <- sum(((A_mean[ok] - A_const) / A_sd[ok])^2)
+  ndf <- sum(ok) - 1
+  p_value <- if (ndf > 0) pchisq(chi2, df = ndf, lower.tail = FALSE) else NA
+  if (ndf < 1) chi2 <- NA
+
+  constancy[[k]] <- data.frame(
+    Pair = pair_names[k],
+    A_constant_fit = round(A_const, 5),
+    Chi2 = round(chi2, 2),
+    ndf = ndf,
+    p_value = signif(p_value, 3),
+    Depends_on_momentum = !is.na(p_value) & p_value < 0.003
+  )
+}
+
+per_set   <- do.call(rbind, per_set)
+results   <- do.call(rbind, results)
+constancy <- do.call(rbind, constancy)
+
+write.csv(per_set,   "momentum_counts_per_set.csv",    row.names = FALSE)
+write.csv(results,   "momentum_asymmetry_results.csv", row.names = FALSE)
+write.csv(constancy, "momentum_constancy_test.csv",    row.names = FALSE)
+
+cat("Asymmetry A = (WT - variant) / (WT + variant) per momentum bin:\n\n")
+print(results, row.names = FALSE)
+cat("\nIs A constant with momentum? (p < 0.003 = depends on momentum at 3 sigma)\n\n")
+print(constancy, row.names = FALSE)
+
+# ---- Step 4: plot A vs momentum bin for each pair ----
+png("asymmetry_vs_momentum.png", width = 1500, height = 950, res = 130)
+par(mfrow = c(2, 3), mar = c(5, 4.5, 3, 1))
+for (k in seq_len(n_pairs)) {
+  r <- results[results$Pair == pair_names[k], ]
+  lo <- r$A - r$Uncertainty
+  hi <- r$A + r$Uncertainty
+  ylim <- range(c(lo, hi, 0), na.rm = TRUE)
+  plot(r$Bin, r$A, pch = 19, ylim = ylim, xaxt = "n",
+       xlab = "|p| bin (10^-20 kg m/s)", ylab = "A = (WT - var)/(WT + var)",
+       main = pair_names[k])
+  axis(1, at = r$Bin, labels = r$MomentumRange, cex.axis = 0.75)
+  arrows(r$Bin, lo, r$Bin, hi, angle = 90, code = 3, length = 0.04)
+  abline(h = 0, lty = 2, col = "grey50")
+}
+dev.off()
+cat("\nSaved: momentum_asymmetry_results.csv, momentum_constancy_test.csv,",
+    "momentum_counts_per_set.csv, asymmetry_vs_momentum.png\n")
+    
