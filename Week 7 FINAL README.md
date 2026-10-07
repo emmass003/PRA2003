@@ -2,9 +2,9 @@ PRA2003 – Bacterial tracking analysis (Emma Schwarz)
 
 It answers the three questions from the assignment:
 
-What are the average counts of each strain, and their statistical uncertainties?
-Is there an asymmetry between the normal (wild-type) strain and its variant? Quantify it.
-Is there an asymmetry as a function of momentum? Quantify it.
+Question 1: What are the average counts of each strain, and their statistical uncertainties?
+Question 2: Is there an asymmetry between the normal (wild-type) strain and its variant? Quantify it.
+Question 3: Is there an asymmetry as a function of momentum? Quantify it.
 All 10 data sets were used (output-Set1.txt to output-Set10.txt), each set including about 500 000 events. Each event is one simulated experiment and lists every bacterium seen in it, as px py pz code.
 
 Events with 0 bacteria were left excluded, since nothing was observed, leaving 4,617,993 events in total, about 462,000 per set.
