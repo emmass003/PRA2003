@@ -3,17 +3,20 @@ PRA2003 – Bacterial tracking analysis (Emma Schwarz)
 It answers the three questions from the assignment:
 
 Question 1: What are the average counts of each strain, and their statistical uncertainties?
+
 Question 2: Is there an asymmetry between the normal (wild-type) strain and its variant? Quantify it.
+
 Question 3: Is there an asymmetry as a function of momentum? Quantify it.
+
 All 10 data sets were used (output-Set1.txt to output-Set10.txt), each set including about 500 000 events. Each event is one simulated experiment and lists every bacterium seen in it, as px py pz code.
 
 Events with 0 bacteria were left excluded, since nothing was observed, leaving 4,617,993 events in total, about 462,000 per set.
 
 The files contain 38 different codes. Only the 12 in the table below are the strains we're studying. All other codes are background and are left out of every result here.
 
-Code Strain Code Variant 211 E. coli WT −211 E. coli mutant 321 Bacillus subtilis WT −321 B. subtilis mutant 2212 Pseudomonas aeruginosa WT −2212 P. aeruginosa, antibiotic-resistant 3122 Streptococcus pneumoniae −3122 Capsule-deficient S. pneumoniae 3312 Mycobacterium tuberculosis −3312 Drug-resistant M. tuberculosis 3334 Salmonella enterica −3334 Salmonella mutant
+<img width="681" height="452" alt="image" src="https://github.com/user-attachments/assets/eb8f3095-158e-4139-a205-2974a1fdb26a" />
 
-                            METHODS
+                                  METHODS 
 The subsampling method was used, treating each 10 data sets as as one independent subsample.
 
 PART1: each data file is read in chunksso a file never has to fit in memory all at once. It works out an average number per event in that file for every code. The results for all 10 files are saved to sub_sample_results.csv.
@@ -22,7 +25,8 @@ PART2: the 10 subsamples are combined. The final average consists of the weighte
 
 ASYMMETY SCRIPT: each wild type is compared to it's variant (set by set) --> Question 2
 
-                    Signifance criterion --> 3σ
+Signifance criterion --> 3σ
+
 A difference that was smaller than 3 standard deviations --> consistent with 0 A difference of 3σ or more --> counted as real, statistically significant asymmetry
 
                 Question 1 – Average count per event
@@ -47,17 +51,21 @@ Question 2 – Is there an asymmetry between wild type and variant?
  How were they compared:
     The differnces was taken for each pair 
 
-    --> Δ = (WT average) − (variant average) 
+--> Δ = (WT average) − (variant average) 
 
-    seperately (in each of the 10 sets). The mean of the 10 differences as the results as well as their standard deviation as the uncertainty 
-    We also give the normalised asymmetry
+ seperately (in each of the 10 sets). The mean of the 10 differences as the results as well as their standard deviation as the uncertainty 
+  
+We also give the normalised asymmetry
 
     A = (WT − variant) / (WT + variant)
 
-    worked out the same way, so pairs with very different abundances can be compared.
-    Why set by set? 
-        The numbers show that WT and variant rise and fall together from one set to the next. In set 1, for example, E. coli WT and mutant are both high (20.010 and 19.982). In set 9 they are both low (19.912 and 19.889). 
-        Comparing within each set --> cancels out that shared fluctuation + only the real WT–variant difference is left.
+  worked out the same way, so pairs with very different abundances can be compared.
+  
+  Why set by set? 
+      
+      The numbers show that WT and variant rise and fall together from one set to the next. In set 1, for example, E. coli WT and mutant are both high (20.010 and 19.982). In set 9 they are both low (19.912 and 19.889). 
+     
+      Comparing within each set --> cancels out that shared fluctuation + only the real WT–variant difference is left.
 If you instead subtract the two final averages and combine their uncertainties in quadrature, that shared fluctuation gets counted as noise. For E. coli that approach gives only 0.7σ, even though the WT is ahead of the mutant in all 10 sets.
 
 
