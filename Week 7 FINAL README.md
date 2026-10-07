@@ -62,13 +62,13 @@ If you instead subtract the two final averages and combine their uncertainties i
 
 
                                                 RESULTS
-Pair	                     Δ (per event)	             A	        Significance	Sets with WT > variant	        Result
-E. coli(±211)               0.0323 ± 0.0045	      0.00081 ± 0.00011	       7.2σ	        10 / 10                     Significant
-B. subtilis (±321)	        0.0057 ± 0.0033	      0.0011 ± 0.0007	       1.7σ	        9 / 10	                    Consistent with 0
-P. aeruginosa (±2212)	    0.0239 ± 0.0024	      0.0100 ± 0.0010	       10.1σ	    10 / 10	                    Significant
-S. pneumoniae (±3122)	    0.00490 ± 0.00058	  0.0089 ± 0.0011	       8.5σ	        10 / 10	                    Significant
-M. tuberculosis (±3312)	    0.00044 ± 0.00049	  0.006 ± 0.006	           0.9σ         9  / 10	                    Consistent with 0
-Salmonella (±3334)	        0.00004 ± 0.00007	  0.016 ± 0.029	           0.5σ	        6 / 10	                    Consistent with 0
+Pair	                     Δ (per event)	             A	              Significance	   Sets with WT > variant	            Result
+E. coli(±211)               0.0323 ± 0.0045	      0.00081 ± 0.00011	       7.2σ	             10 / 10                      Significant
+B. subtilis (±321)	        0.0057 ± 0.0033	      0.0011 ± 0.0007	         1.7σ	             9 / 10	                      Consistent with 0
+P. aeruginosa (±2212)	      0.0239 ± 0.0024	      0.0100 ± 0.0010	         10.1σ	           10 / 10	                    Significant
+S. pneumoniae (±3122)	      0.00490 ± 0.00058	    0.0089 ± 0.0011	         8.5σ	             10 / 10	                    Significant
+M. tuberculosis (±3312)	    0.00044 ± 0.00049	    0.006 ± 0.006	           0.9σ              9  / 10	                    Consistent with 0
+Salmonella (±3334)	        0.00004 ± 0.00007	    0.016 ± 0.029	           0.5σ	             6 / 10	                      Consistent with 0
 
 Answer:
 There is an asymmetry but only in 3 of the 6 pairs and in each one the wild type is the more common one.
@@ -83,4 +83,6 @@ There is an asymmetry but only in 3 of the 6 pairs and in each one the wild type
 - B. subtilis: no significant asymmetry (1.7σ) --> The WT is slightly ahead in 9 of the 10 sets : hints at something, but at 1.7σ it is well below our 3σ criterion -->  with the data it is consistent with no asymmetry
 
 - M. tuberculosis and Salmonella: no significant asymmetry (0.9σ and 0.5σ)-->  These strains are rare, so their uncertainties are large compared with any difference. We can't rule out a small asymmetry: with 3σ we could only have detected one bigger than about 2% for M. tuberculosis and about 9% for Salmonella.
+
+  
 The three significant results clear 3σ even with these larger errors --> the conclusion that they are real asymmetries holds.
