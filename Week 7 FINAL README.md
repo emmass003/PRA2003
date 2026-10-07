@@ -62,13 +62,7 @@ If you instead subtract the two final averages and combine their uncertainties i
 
 
                                                 RESULTS
-Pair	                     Δ (per event)	             A	              Significance	   Sets with WT > variant	            Result
-E. coli(±211)               0.0323 ± 0.0045	      0.00081 ± 0.00011	       7.2σ	             10 / 10                      Significant
-B. subtilis (±321)	        0.0057 ± 0.0033	      0.0011 ± 0.0007	         1.7σ	             9 / 10	                      Consistent with 0
-P. aeruginosa (±2212)	      0.0239 ± 0.0024	      0.0100 ± 0.0010	         10.1σ	           10 / 10	                    Significant
-S. pneumoniae (±3122)	      0.00490 ± 0.00058	    0.0089 ± 0.0011	         8.5σ	             10 / 10	                    Significant
-M. tuberculosis (±3312)	    0.00044 ± 0.00049	    0.006 ± 0.006	           0.9σ              9  / 10	                    Consistent with 0
-Salmonella (±3334)	        0.00004 ± 0.00007	    0.016 ± 0.029	           0.5σ	             6 / 10	                      Consistent with 0
+<img width="1008" height="154" alt="image" src="https://github.com/user-attachments/assets/8b98ed14-4d2d-49ef-9d54-2f063c3f314b" />
 
 Answer:
 There is an asymmetry but only in 3 of the 6 pairs and in each one the wild type is the more common one.
