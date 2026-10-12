@@ -237,34 +237,20 @@ The momentum analysis agrees question 2: the pairs with a significant overall WT
 
 ## 10. How to reproduce
 
-1. Download the 10 data files from surfdrive and place them in this
-   folder (not committed to the repo — too large).
-2. Run `analyzeAllSubsamples.R` once — analyzes all 10 files (one shared
-   function, looped over each filename) and writes `subsample_results.csv`.
-3. Run `Week4deliverable.R` — reads `subsample_results.csv`, combines the
-   10 sub-samples into the final result above, and writes
-   `final_results.csv`. Runs instantly, since it doesn't re-read the raw
-   data files.
-4. Run `asymmetryTest.R` — reads `subsample_results.csv`, runs the
-   paired-difference asymmetry test for the 6 WT/mutant pairs, and writes
-   `asymmetry_results.csv`. Also runs instantly.
-5. Run `momentumDifference.R` — the momentum analysis. It
-   uses the saved counts per file and bin (`momentum_perfile_results.csv`)
-   and bin boundaries (`momentum_bin_edges.csv`) if they exist and runs in
-   a few seconds; otherwise it re-reads all 10 raw data files (about 20
-   minutes). It writes the results for Sets 1–9 (`momentum_difference_*`)
-   and, for comparison, for all 10 sets (`momentum_difference_*_all_sets`).
-   The excluded set is chosen with the setting `excludedSets` at the top of
-   the script.
+1. Download the 10 data files from surfdrive and place them in thisfolder (not committed to the repo — too large).
+2. Run `Week4_Subsample_Analysis.R` once — analyzes all 10 files (one shared function, looped over each filename) and writes `subsample_results.csv`.
+3. Run `Week4_Deliverable_Code.R` — reads `subsample_results.csv`, combines the 10 sub-samples into the final result above, and writes `final_results.csv`. Runs instantly, since it doesn't re-read the raw data files.
+4. Run `Week4_Asymmetry_Test_Code.R` — reads `subsample_results.csv`, runs the paired-difference asymmetry test for the 6 WT/mutant pairs, and writes`asymmetry_results.csv`. Also runs instantly.
+5. Run `Week5_Momentum_Difference.R` — the momentum analysis. It uses the saved counts per file and bin (`momentum_perfile_results.csv`) and bin boundaries (`momentum_bin_edges.csv`) if they exist and runs in a few seconds; otherwise it re-reads all 10 raw data files (about 20 minutes). It writes the results for Sets 1–9 (`momentum_difference_*`) and, for comparison, for all 10 sets (`momentum_difference_*_all_sets`). The excluded set is chosen with the setting `excludedSets` at the top of the script.
 
 ## 11. Files in this repository
 
 | File                                        | Purpose                                                                   |
 | ------------------------------------------- | ------------------------------------------------------------------------- |
-| `Week4 Subsample analysis Code`             | Analyzes all 10 data files, writes `subsample_results.csv`                |
-| `Week4 Deliverable Code`                    | Combines the 10 sub-samples into the final result                         |
-| `Asymmetry Test Code`                       | Paired-difference asymmetry test for the 6 pairs                          |
-| `momentumDifference.R`                      | Difference per event as a function of momentum, fit and plots             |
+| `Week4_Subsample_analysis_Code.R`           | Analyzes all 10 data files, writes `subsample_results.csv`                |
+| `Week4_Deliverable_Code.R`                  | Combines the 10 sub-samples into the final result                         |
+| `Week4_Asymmetry_Test_Code.R`               | Paired-difference asymmetry test for the 6 pairs                          |
+| `Week5_Momentum_Difference.R`               | Difference per event as a function of momentum, fit and plots             |
 | `subsample_results.csv`                     | Per-file results (10 files x 12 strains, 120 rows)                        |
 | `final_results.csv`                         | Final combined results (12 strains)                                       |
 | `asymmetry_results.csv`                     | Asymmetry test results (6 pairs)                                          |
