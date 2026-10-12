@@ -253,6 +253,8 @@ HOW TO REPRODUCE
 | `subsample_results.csv`                     | Per-file results (10 files x 12 strains, 120 rows)                        |
 | `final_results.csv`                         | Final combined results (12 strains)                                       |
 | `asymmetry_results.csv`                     | Asymmetry test results (6 pairs)                                          |
+| `momentum_perfile_results.csv`              | WT and mutant counts per file, pair and momentum bin                      |
+| `momentum_bin_edges.csv`                    | Momentum bin boundaries (quantiles of Set 1)                              |
 | `momentum_difference_results.csv`           | Difference per event ± uncertainty per pair and bin, Sets 1–9             |
 | `momentum_difference_fit.csv`               | Fit of a constant: c ± uncertainty and χ² per pair, Sets 1–9              |
 | `momentum_difference.png`                   | Plot  Sets 1–9                                                            |
