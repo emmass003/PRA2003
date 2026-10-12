@@ -235,8 +235,7 @@ In the three significant pairs the WT/normal form is always the more common one.
 
 The momentum analysis agrees question 2: the pairs with a significant overall WT surplus (E. coli, P. aeruginosa, S. pneumoniae) also show it across the momentum bins, and the pairs without one (B. subtilis,M. tuberculosis, Salmonella) do not. For P. aeruginosa and S.pneumoniae the χ² of the constant fit shows that the surplus grows with momentum; for *E. coli* the points also rise, but a constant still describes them well. With all 10 sets included, Set 10's different momentum distribution inflates the high-momentum uncertainties, and E. coli (2.78σ) and S. pneumoniae (2.94σ) drop just below 3σ. M. tuberculosis and Salmonella show no difference at any momentum; there are too few of them per bin for such a small difference to be measurable.
 
-## 10. How to reproduce
-
+HOW TO REPRODUCE
 1. Download the 10 data files from surfdrive and place them in thisfolder (not committed to the repo — too large).
 2. Run `Week4_Subsample_Analysis.R` once — analyzes all 10 files (one shared function, looped over each filename) and writes `subsample_results.csv`.
 3. Run `Week4_Deliverable_Code.R` — reads `subsample_results.csv`, combines the 10 sub-samples into the final result above, and writes `final_results.csv`. Runs instantly, since it doesn't re-read the raw data files.
@@ -254,13 +253,13 @@ The momentum analysis agrees question 2: the pairs with a significant overall WT
 | `subsample_results.csv`                     | Per-file results (10 files x 12 strains, 120 rows)                        |
 | `final_results.csv`                         | Final combined results (12 strains)                                       |
 | `asymmetry_results.csv`                     | Asymmetry test results (6 pairs)                                          |
-| `momentum_perfile_results.csv`              | WT and mutant counts per file, pair and momentum bin                      |
-| `momentum_bin_edges.csv`                    | Momentum bin boundaries (quantiles of Set 1)                              |
+| `**momentum_perfile_results.csv**`              | WT and mutant counts per file, pair and momentum bin                      |
+| `**momentum_bin_edges.csv**`                    | Momentum bin boundaries (quantiles of Set 1)                              |
 | `momentum_difference_results.csv`           | Difference per event ± uncertainty per pair and bin, Sets 1–9             |
 | `momentum_difference_fit.csv`               | Fit of a constant: c ± uncertainty and χ² per pair, Sets 1–9              |
 | `momentum_difference.png`                   | Plot  Sets 1–9                                                            |
-| `momentum_difference_results_all_sets.csv`  | Same as above, all 10 sets (comparison)                                   |
-| `momentum_difference_fit_all_sets.csv`      | Same as above, all 10 sets (comparison)                                   |
-| `momentum_difference_all_sets.png`          | Plot of all 10 sets (comparison)                                          |
-| `README.md`                                 | This file                                                                 |
+| `**momentum_difference_results_all_sets.csv`  | Same as above, all 10 sets (comparison)                                   |
+| `**momentum_difference_fit_all_sets.csv`      | Same as above, all 10 sets (comparison)                                   |
+| `**momentum_difference_all_sets.png`          | Plot of all 10 sets (comparison)                                          |
+| `Week7_FINAL_README.md`                     | This file                                                                 |
 
