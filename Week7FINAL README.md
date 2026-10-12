@@ -261,9 +261,9 @@ The momentum analysis agrees question 2: the pairs with a significant overall WT
 
 | File                                        | Purpose                                                                   |
 | ------------------------------------------- | ------------------------------------------------------------------------- |
-| `analyzeAllSubsamples.R`                    | Analyzes all 10 data files, writes `subsample_results.csv`                |
-| `Week4deliverable.R`                        | Combines the 10 sub-samples into the final result                         |
-| `asymmetryTest.R`                           | Paired-difference asymmetry test for the 6 pairs                          |
+| `Week4 Subsample analysis Code`             | Analyzes all 10 data files, writes `subsample_results.csv`                |
+| `Week4 Deliverable Code`                    | Combines the 10 sub-samples into the final result                         |
+| `Asymmetry Test Code`                       | Paired-difference asymmetry test for the 6 pairs                          |
 | `momentumDifference.R`                      | Difference per event as a function of momentum, fit and plots             |
 | `subsample_results.csv`                     | Per-file results (10 files x 12 strains, 120 rows)                        |
 | `final_results.csv`                         | Final combined results (12 strains)                                       |
