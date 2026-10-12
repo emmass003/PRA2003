@@ -113,7 +113,6 @@ e.g. E. coli WT has about 1.79 million bacteria in the 2.68 – 5.87 bin in each
 
                                                   RESULTS (Sets 1–9)
 
-![WT − mutant difference per event vs momentum, Sets 1–9, with the fitted constant](momentum_difference.png)
 
 *Each point is the mean of Sets 1–9, the error bars are ± 1 standard deviation of the 9 files, the red line is the fitted constant with its ± 1σ band (shaded), and the dashed line is "no difference".*
 
