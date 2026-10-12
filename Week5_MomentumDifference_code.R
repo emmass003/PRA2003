@@ -4,9 +4,9 @@
 # between the WT/normal form and the mutant/resistant form depends on the
 # momentum of the bacteria (p = sqrt(px^2 + py^2 + pz^2)).
 #
-# Builds on momentumAsymmetry.R (Week 4): the counting is the same, but
+# Builds on Week4_Momentum_Asymmetry_Code.R (Week 4): the counting is the same, but
 # instead of a ratio it now uses the DIFFERENCE per event, the same quantity
-# as in Q2 (asymmetryTest.R), and adds a fit of a constant and a plot.
+# as in Q2 (Week4_AsymmetryTest_Code.R), and adds a fit of a constant and a plot.
 #
 # Method:
 #   1. Every occurrence of one of the 12 target strains has its momentum
@@ -39,8 +39,8 @@
 # comparison.
 #
 # HOW TO RUN:
-#   Run analyzeAllSubsamples.R first (for the number of events per file in
-#   subsample_results.csv). Then: Rscript momentumDifference.R
+#   Run Week4_Subsample_analysis_Code.R first (for the number of events per file in
+#   subsample_results.csv). Then: Rscript Week5_Momentum_Difference_Code.R
 #   The counts per file are cached in momentum_perfile_results.csv and the
 #   bin boundaries in momentum_bin_edges.csv. If both exist, the raw data is
 #   not read again (a few seconds). Delete them to redo the counting
@@ -74,11 +74,11 @@ edgesFile <- "momentum_bin_edges.csv"
 eventsFile <- "subsample_results.csv"
 
 if (!file.exists(eventsFile)) {
-  stop("Cannot find '", eventsFile, "'. Run analyzeAllSubsamples.R first.")
+  stop("Cannot find '", eventsFile, "'. Run Week4_Subsample_analysis_Code.R first.")
 }
 
 # ---- Reads one file, returning the momentum and ID of every occurrence
-# of a target strain in it (same function as in momentumAsymmetry.R) ----
+
 extractMomentumAndID <- function(filepath) {
   con <- file(filepath, "r")
   on.exit(close(con))
