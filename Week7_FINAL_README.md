@@ -113,7 +113,6 @@ e.g. E. coli WT has about 1.79 million bacteria in the 2.68 – 5.87 bin in each
 
                                                   RESULTS (Sets 1–9)
 
-
 *Each point is the mean of Sets 1–9, the error bars are ± 1 standard deviation of the 9 files, the red line is the fitted constant with its ± 1σ band (shaded), and the dashed line is "no difference".*
 
 Difference per event in each momentum bin:
@@ -153,6 +152,7 @@ Difference per event in each momentum bin:
 
 
 Fit of a constant through the 5 momentum bins:
+<img width="1800" height="1100" alt="momentum_difference" src="https://github.com/user-attachments/assets/ca92f896-4635-4de4-b172-6d1489083e67" />
 
 | Strain                     | Fitted constant (per event) | Significance             | χ²/ndf (p-value)  |
 | -------------------------- | --------------------------: | ------------------------ | ----------------- |
@@ -173,20 +173,6 @@ The same three pairs that have a significant overall asymmetry question 2 also s
 - Salmonella in particular is
 so rare (about 550 bacteria of each form per file, split over 5 bins) that the differences of a few bacteria per bin are smaller than the counting noise, which is why its points lie on a flat line around zero
 
-### Comparison: all 10 sets
-<img width="1800" height="1100" alt="momentum_difference" src="https://github.com/user-attachments/assets/ca92f896-4635-4de4-b172-6d1489083e67" />
-![WT − mutant difference per event vs momentum, all 10 sets, with the fitted constant](momentum_difference_all_sets.png)
-
-| Strain                     | Fitted constant, all 10 sets | Significance             | Sets 1–9 (main result) |
-| -------------------------- | ---------------------------: | ------------------------ | ---------------------- |
-| *E. coli*                  |            0.00492 ± 0.00177 | 2.78σ — not significant  | **4.53σ**              |
-| *Bacillus subtilis*        |            0.00050 ± 0.00057 | 0.87σ — not significant  | 1.50σ                  |
-| *Pseudomonas aeruginosa*   |            0.00252 ± 0.00054 | **4.64σ — significant**  | **8.17σ**              |
-| *Streptococcus pneumoniae* |          0.000545 ± 0.000186 | 2.94σ — not significant  | **4.52σ**              |
-| *M. tuberculosis*          |          0.000047 ± 0.000068 | 0.69σ — not significant  | 0.65σ                  |
-| *Salmonella*               |        0.0000065 ± 0.0000090 | 0.71σ — not significant  | 0.83σ                  |
-
-With Set 10 included, the outlying values in the two highest bins increase the uncertainties there (for E. coli from 0.00261 to 0.00643 in the 2.68 – 5.87 bin and from 0.00347 to 0.00493 in the > 5.87 bin), and E. coli and S. pneumoniae drop just below 3σ (2.78σ and 2.94σ). The other pairs come to the same conclusion either way: P. aeruginosa is significant with and without Set 10, and B. subtilis, M. tuberculosis and Salmonella are not significant in either case.
 
                                             LIMITATIONS
 
