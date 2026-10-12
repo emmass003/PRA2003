@@ -88,3 +88,17 @@ There is an asymmetry but only in 3 of the 6 pairs and in each one the wild type
 
   
 The three significant results clear 3σ even with these larger errors --> the conclusion that they are real asymmetries holds.
+
+
+Question 3: 
+                                                                METHODS
+
+1. Momentum of each bacterium of one of the 12 strains, in all 10 files: `|p| = sqr(px^2 + py^2 + pz^2)` (in 10^-20 kg m/s).
+2. Each bacterium is assigned to one of the **5 momentum bins. The bin edges are the 20/40/60/80% points (quantiles) of the momentum in Set 1, so each bin contains ~20% of the bacteria and has similar statistics: < 0.65, 0.65 – 1.32, 1.32 – 2.68, 2.68 – 5.87, > 5.87
+   Same limits for each file. The first and last bins are open-ended, so all bacteria are counted.
+3. For each file, strain pair and bin, the WT and mutant counts are turned into averages per event (exactly as in sections 4 and 5) anD        subtracted
+   within that file: `Dᵢ = count_WTᵢ / nEventsᵢ − count_mutantᵢ / nEventsᵢ`
+   This is the same quantity as in section 5 (a difference per event, not a ratio), so the five bins of a pair add up to its overall           difference.
+4. For each pair, and each bin, the result of the sub-sampling method is: the point is the mean of the per-file values of `Dᵢ`, the            uncertainty is their standard deviation, and the significance is point / uncertainty.
+5. A constant (a flat line `D = c`) is fitted through the 5 points, to test for an asymmetry across the momentum bins. The fit is weighted     with `w = 1/σ²`, so more precise points count more. For a constant, the least-squares result is the weighted mean of the points: `c =       Σ(w·D) / Σw`, with uncertainty `σ_c = 1/√(Σw)`. The significance is  `c / σ_c`. The χ² of the fit, `χ² = Σ((D − c)/σ)²` with ndf = 5 − 1    = 4, shows whether a constant describes the points: χ²/ndf around 1 means yes, much larger means the difference changes with momentum.
+
