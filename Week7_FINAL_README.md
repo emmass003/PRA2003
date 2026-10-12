@@ -240,7 +240,7 @@ HOW TO REPRODUCE
 2. Run `Week4_Subsample_Analysis.R` once — analyzes all 10 files (one shared function, looped over each filename) and writes `subsample_results.csv`.
 3. Run `Week4_Deliverable_Code.R` — reads `subsample_results.csv`, combines the 10 sub-samples into the final result above, and writes `final_results.csv`. Runs instantly, since it doesn't re-read the raw data files.
 4. Run `Week4_Asymmetry_Test_Code.R` — reads `subsample_results.csv`, runs the paired-difference asymmetry test for the 6 WT/mutant pairs, and writes`asymmetry_results.csv`. Also runs instantly.
-5. Run `Week5_Momentum_Difference.R` — the momentum analysis. It uses the saved counts per file and bin (`momentum_perfile_results.csv`) and bin boundaries (`momentum_bin_edges.csv`) if they exist and runs in a few seconds; otherwise it re-reads all 10 raw data files (about 20 minutes). It writes the results for Sets 1–9 (`momentum_difference_*`) and, for comparison, for all 10 sets (`momentum_difference_*_all_sets`). The excluded set is chosen with the setting `excludedSets` at the top of the script.
+5. Run `Week5_Momentum_Difference.R` — the momentum analysis. It uses the saved counts per file and bin (`momentum_perfile_results.csv`) and bin boundaries (`momentum_bin_edges.csv`) if they exist and runs in a few seconds; otherwise it re-reads all 10 raw data files (about 20 minutes). It writes the results for Sets 1–9 (`momentum_difference_*`). The excluded set is chosen with the setting `excludedSets` at the top of the script.
 
 ## 11. Files in this repository
 
@@ -253,13 +253,8 @@ HOW TO REPRODUCE
 | `subsample_results.csv`                     | Per-file results (10 files x 12 strains, 120 rows)                        |
 | `final_results.csv`                         | Final combined results (12 strains)                                       |
 | `asymmetry_results.csv`                     | Asymmetry test results (6 pairs)                                          |
-| `**momentum_perfile_results.csv**`              | WT and mutant counts per file, pair and momentum bin                      |
-| `**momentum_bin_edges.csv**`                    | Momentum bin boundaries (quantiles of Set 1)                              |
 | `momentum_difference_results.csv`           | Difference per event ± uncertainty per pair and bin, Sets 1–9             |
 | `momentum_difference_fit.csv`               | Fit of a constant: c ± uncertainty and χ² per pair, Sets 1–9              |
 | `momentum_difference.png`                   | Plot  Sets 1–9                                                            |
-| `**momentum_difference_results_all_sets.csv`  | Same as above, all 10 sets (comparison)                                   |
-| `**momentum_difference_fit_all_sets.csv`      | Same as above, all 10 sets (comparison)                                   |
-| `**momentum_difference_all_sets.png`          | Plot of all 10 sets (comparison)                                          |
 | `Week7_FINAL_README.md`                     | This file                                                                 |
 
