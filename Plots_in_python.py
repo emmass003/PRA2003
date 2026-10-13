@@ -1,14 +1,16 @@
-# PRA2003 - Week 5: Python version of the plot from momentumDifference.R
-#
-# Reads the results that momentumDifference.R writes and draws the same
-# figure with matplotlib: one panel per WT/mutant pair, the difference per
-# event in each momentum bin with +- SD error bars, and the fitted constant
-# with its +- 1 sigma band.
+# PRA2003 - Week 5: plot of the WT - mutant difference vs momentum (Python)
+
+# For each of the 6 WT/mutant pairs it draws:
+#   - the difference per event in each momentum bin, with +- SD error bars
+#     (plt.errorbar, like the "graph w/ uncertainties" example)
+#   - the fitted constant as a red line, with its +- 1 sigma uncertainty
+#     as a shaded band (plt.fill_between)
+#   - a dashed line at zero (= no difference between WT and mutant)
 #
 # HOW TO RUN:
-#   Run momentumDifference.R first, then in the same folder:
-#     python momentum_difference_plot.py
-#   Needs pandas and matplotlib (pip install pandas matplotlib).
+#   1. Run Week5_momentum_Difference.R first. It writes the CSV files read here.
+#   2. In the same folder: python momentum_difference_plot.py
+#   Needs numpy, pandas and matplotlib (pip install numpy pandas matplotlib).
 #
 # Writes:
 #   momentum_difference_py.png           (Sets 1-9, main result)
@@ -17,79 +19,88 @@
 import os
 
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 
+# Read and save everything in the folder this script is in, so it works no
+# matter which folder VS Code's terminal is in
+folder = os.path.dirname(os.path.abspath(__file__))
+
 # Same order as pairName in the R script
-pair_names = ["E. coli", "Bacillus subtilis", "Pseudomonas aeruginosa",
-              "Streptococcus pneumoniae", "Mycobacterium tuberculosis",
-              "Salmonella"]
+pairNames = ["E. coli", "Bacillus subtilis", "Pseudomonas aeruginosa",
+             "Streptococcus pneumoniae", "Mycobacterium tuberculosis",
+             "Salmonella"]
 
+# The two versions written by the R script: (end of the file name, sets used)
+versions = [("", "sets 1-9"),
+            ("_all_sets", "sets 1-10")]
 
-def plot_sets(name_suffix, sets_text):
-    results_file = f"momentum_difference_results{name_suffix}.csv"
-    fit_file = f"momentum_difference_fit{name_suffix}.csv"
+for nameSuffix, setsText in versions:
 
-    if not (os.path.exists(results_file) and os.path.exists(fit_file)):
-        print(f"Skipping '{name_suffix or 'main'}': cannot find {results_file} "
-              f"or {fit_file}. Run momentumDifference.R first.")
-        return
+    # Read the results of the R script (pandas DataFrames)
+    results = pd.read_csv(os.path.join(folder, "momentum_difference_results" + nameSuffix + ".csv"))
+    fitResults = pd.read_csv(os.path.join(folder, "momentum_difference_fit" + nameSuffix + ".csv"))
 
-    results = pd.read_csv(results_file)
-    fits = pd.read_csv(fit_file)
+    # Print the data that is plotted
+    print("\n==== Using", setsText, "====")
+    print(results)
+    print(fitResults)
 
-    fig, axes = plt.subplots(2, 3, figsize=(18, 11))
+    # Create the plot: one panel per pair, 2 rows x 3 columns
+    plt.figure(figsize=(18, 10))
 
-    for ax, name in zip(axes.flat, pair_names):
-        rows = results[results["Strain"] == name].sort_values("MomentumBin")
-        fit = fits[fits["Strain"] == name].iloc[0]
+    for i in range(len(pairNames)):
+        pairRows = results[results["Strain"] == pairNames[i]]
+        fit = fitResults[fitResults["Strain"] == pairNames[i]]
 
-        x = rows["MomentumBin"].to_numpy()
-        y = rows["Difference"].to_numpy()
-        err = rows["Uncertainty"].to_numpy()
-        n_bins = len(x)
+        x = np.array(pairRows["MomentumBin"])
+        y = np.array(pairRows["Difference"])
+        yErrors = np.array(pairRows["Uncertainty"])
 
-        c = fit["Constant"]
-        c_err = fit["ConstantUncertainty"]
+        constant = fit["Constant"].iloc[0]
+        constantError = fit["ConstantUncertainty"].iloc[0]
+        significance = fit["Significance"].iloc[0]
+        chi2 = fit["Chi2"].iloc[0]
+        ndf = fit["ndf"].iloc[0]
 
-        # fitted constant with its +- 1 sigma band
-        ax.axhspan(c - c_err, c + c_err, color="red", alpha=0.15, lw=0)
-        ax.axhline(c, color="red", lw=2)
-        ax.axhline(0, color="grey", ls="--", lw=1)  # no difference
+        plt.subplot(2, 3, i + 1)
 
-        # points with +- SD error bars
-        ax.errorbar(x, y, yerr=err, fmt="o", color="darkblue",
-                    ecolor="black", capsize=4, markersize=6)
+        # Fitted constant with its +- 1 sigma uncertainty as a shaded band
+        xBand = np.array([0.5, len(x) + 0.5])
+        plt.fill_between(xBand, constant - constantError, constant + constantError,
+                         color='red', alpha=0.2)
+        plt.plot(xBand, [constant, constant], color='red', linewidth=2,
+                 label='Fitted constant')
 
-        # make sure zero is always visible, like range(c(low, high, 0)) in R
-        low = min((y - err).min(), 0)
-        high = max((y + err).max(), 0)
-        pad = 0.05 * (high - low)
-        ax.set_ylim(low - pad, high + pad)
-        ax.set_xlim(0.7, n_bins + 0.3)
+        # Line at zero: no difference between WT and mutant
+        plt.axhline(0, color='gray', linestyle='--')
 
-        ax.set_xticks(x)
-        ax.set_xticklabels(rows["MomentumRange"], fontsize=9)
-        ax.set_xlabel(r"Momentum bin |p| ($10^{-20}$ kg m/s)", fontsize=10)
-        ax.set_ylabel("Difference per event (WT - mutant)", fontsize=10)
+        # Data points with their uncertainties (SD of the files)
+        plt.errorbar(x, y, yerr=yErrors, fmt='o', color='darkblue', ecolor='black',
+                     capsize=4, label='Data (mean +- SD)')
 
-        ax.set_title(name, fontstyle="italic", fontsize=13, pad=22)
-        ax.text(0.5, 1.02,
-                f"constant = {c:.3g} ± {c_err:.3g} ({fit['Significance']:.1f}σ), "
-                f"χ²/ndf = {fit['Chi2']:.1f}/{int(fit['ndf'])}",
-                transform=ax.transAxes, ha="center", va="bottom", fontsize=9)
+        # Add titles and labels
+        plt.title(pairNames[i] + "\n" +
+                  f"constant = {constant:.3g} +- {constantError:.3g} "
+                  f"({significance:.1f} sigma), chi2/ndf = {chi2:.1f}/{ndf}",
+                  fontsize=10)
+        plt.xticks(x, pairRows["MomentumRange"])
+        plt.xlim(0.5, len(x) + 0.5)
+        plt.xlabel('Momentum bin |p| (10^-20 kg m/s)')
+        plt.ylabel('Difference per event (WT - mutant)')
 
-    fig.suptitle(f"Difference per event vs momentum ({sets_text})",
-                 fontweight="bold", fontsize=15)
-    fig.tight_layout(rect=[0, 0, 1, 0.96])
+        # Add legend and grid
+        plt.legend(fontsize=8)
+        plt.grid(True)
 
-    out_file = f"momentum_difference{name_suffix}_py.png"
-    fig.savefig(out_file, dpi=140)
-    plt.close(fig)
-    print(f"Wrote {out_file}")
+    plt.suptitle("Difference per event vs momentum (" + setsText + ")",
+                 fontsize=14, fontweight='bold')
+    plt.tight_layout()
 
+    # Save the plot to a file (before plt.show, otherwise the saved image is empty)
+    outFile = os.path.join(folder, "momentum_difference" + nameSuffix + "_py.png")
+    plt.savefig(outFile, dpi=150)
+    print("Saved the plot to", outFile)
 
-# Main result: Sets 1-9 (Set 10 excluded, as in the R script)
-plot_sets("", "sets 1,2,3,4,5,6,7,8,9")
-
-# Comparison: all 10 sets
-plot_sets("_all_sets", "sets 1,2,3,4,5,6,7,8,9,10")
+    # Display the plot
+    plt.show()
