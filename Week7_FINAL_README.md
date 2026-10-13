@@ -240,7 +240,7 @@ Files in this repository
 | `Week4_Subsample_analysis_Code.R`           | Analyzes all 10 data files, writes `subsample_results.csv`                |
 | `Week4_Deliverable_Code.R`                  | Combines the 10 sub-samples into the final result                         |
 | `Week4_Asymmetry_Test_Code.R`               | Paired-difference asymmetry test for the 6 pairs                          |
-| `Week5_Momentum_Difference_Code.R`               | Difference per event as a function of momentum, fit and plots             |
+| `Week5_Momentum_Difference_Code.R`          | Difference per event as a function of momentum, fit and plots             |
 | `subsample_results.csv`                     | Per-file results (10 files x 12 strains, 120 rows)                        |
 | `final_results.csv`                         | Final combined results (12 strains)                                       |
 | `asymmetry_results.csv`                     | Asymmetry test results (6 pairs)                                          |
@@ -252,5 +252,8 @@ Files in this repository
 | `momentum_difference_results_all_sets.csv`  | Same as above, all 10 sets (comparison)                                   |
 | `momentum_difference_fit_all_sets.csv`      | Same as above, all 10 sets (comparison)                                   |
 | `momentum_difference_all_sets.png`          | Plot all 10 sets (comparison)                                             |
+| `Plots_in_python.py`                        | Generates plots in python                                                 |
+| `momentum_difference_py.png`                | Plot sets 1-9                                                             |
+| `momentum_difference_all_sets_py.png`       | Plot all 10 sets (comparison)                                             |
 | `Week7_FINAL_README.md`                     | This file                                                                 |
 
