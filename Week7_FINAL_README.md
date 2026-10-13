@@ -29,7 +29,7 @@ ASYMMETY SCRIPT: each wild type is compared to it's variant (set by set) --> Que
 
 Signifance criterion --> 3σ
 
-A difference that was smaller than 3 standard deviations --> consistent with 0 A difference of 3σ or more --> counted as real, statistically significant asymmetry
+A difference that was smaller than 3 standard deviations --> consistent with 0 A difference of 3σ or more --> counted as real, statistically significant asymmetry.
 
                 Question 1 – Average count per event
 
@@ -103,6 +103,7 @@ Question 3:
    This is the same quantity as question 2, so the five bins of a pair add up to its overall difference.
 4. For each pair, and each bin, the result of the sub-sampling method is: the point is the mean of the per-file values of `Dᵢ`, the            uncertainty is their standard deviation, and the significance is point / uncertainty.
 5. A constant (a flat line `D = c`) is fitted through the 5 points, to test for an asymmetry across the momentum bins. The fit is weighted     with `w = 1/σ²`, so more precise points count more. For a constant, the least-squares result is the weighted mean of the points: `c =       Σ(w·D) / Σw`, with uncertainty `σ_c = 1/√(Σw)`. The significance is  `c / σ_c`. The χ² of the fit, `χ² = Σ((D − c)/σ)²` with ndf = 5 − 1    = 4, shows whether a constant describes the points: χ²/ndf around 1 means yes, much larger means the difference changes with momentum.
+6. Plots were generated using python.
 
 ! Set 10 is left out of the main result. Set 10 has a very different momentum distribution from the other nine files. In Sets 1–9, each momentum bin holds 20.0% of the bacteria (to within 0.1%). Set 10 has the same total number of bacteria, but they are concentrated in the middle bins:
 
@@ -154,7 +155,8 @@ Difference per event in each momentum bin:
 
 
 Fit of a constant through the 5 momentum bins:
-<img width="1800" height="1100" alt="momentum_difference" src="https://github.com/user-attachments/assets/ca92f896-4635-4de4-b172-6d1489083e67" />
+<img width="2520" height="1540" alt="image" src="https://github.com/user-attachments/assets/ab836ea1-98ef-4f83-8d31-25be91d08dd8" />
+
 
 | Strain                     | Fitted constant (per event) | Significance             | χ²/ndf (p-value)  |
 | -------------------------- | --------------------------: | ------------------------ | ----------------- |
