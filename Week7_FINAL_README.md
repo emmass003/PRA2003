@@ -155,7 +155,8 @@ Difference per event in each momentum bin:
 
 
 Fit of a constant through the 5 momentum bins:
-<img width="2520" height="1540" alt="image" src="https://github.com/user-attachments/assets/f4c00d47-c2ab-4c25-9bd1-31a5bc03f11d" />
+<img width="1800" height="1000" alt="image" src="https://github.com/user-attachments/assets/8d33ea68-ab41-4a37-a02b-144348b40ae3" />
+
 
 
 
