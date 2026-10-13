@@ -8,6 +8,8 @@ Question 2: Is there an asymmetry between the normal (wild-type) strain and its 
 
 Question 3: Is there an asymmetry as a function of momentum? Quantify it.
 
+                                              DATA
+
 All 10 data sets were used (output-Set1.txt to output-Set10.txt), each set including about 500 000 events. Each event is one simulated experiment and lists every bacterium seen in it, as px py pz code.
 
 Events with 0 bacteria were left excluded, since nothing was observed, leaving 4,617,993 events in total, about 462,000 per set.
@@ -94,11 +96,11 @@ Question 3:
                                                                 METHODS
 
 1. Momentum of each bacterium of one of the 12 strains, in all 10 files: `|p| = sqr(px^2 + py^2 + pz^2)` (in 10^-20 kg m/s).
-2. Each bacterium is assigned to one of the **5 momentum bins. The bin edges are the 20/40/60/80% points (quantiles) of the momentum in Set 1, so each bin contains ~20% of the bacteria and has similar statistics: < 0.65, 0.65 – 1.32, 1.32 – 2.68, 2.68 – 5.87, > 5.87
+2. Each bacterium was assigned to one of the 5 momentum bins. The bin edges are the 20/40/60/80% points (quantiles) of the momentum in Set 1, so each bin contains ~20% of the bacteria and has similar statistics: < 0.65, 0.65 – 1.32, 1.32 – 2.68, 2.68 – 5.87, > 5.87
    Same limits for each file. The first and last bins are open-ended, so all bacteria are counted.
-3. For each file, strain pair and bin, the WT and mutant counts are turned into averages per event (exactly as in sections 4 and 5) anD        subtracted
+3. For each file, strain pair and bin, the WT and mutant counts are turned into averages per event and subtracted
    within that file: `Dᵢ = count_WTᵢ / nEventsᵢ − count_mutantᵢ / nEventsᵢ`
-   This is the same quantity as question 2 (a difference per event, not a ratio), so the five bins of a pair add up to its overall           difference.
+   This is the same quantity as question 2, so the five bins of a pair add up to its overall difference.
 4. For each pair, and each bin, the result of the sub-sampling method is: the point is the mean of the per-file values of `Dᵢ`, the            uncertainty is their standard deviation, and the significance is point / uncertainty.
 5. A constant (a flat line `D = c`) is fitted through the 5 points, to test for an asymmetry across the momentum bins. The fit is weighted     with `w = 1/σ²`, so more precise points count more. For a constant, the least-squares result is the weighted mean of the points: `c =       Σ(w·D) / Σw`, with uncertainty `σ_c = 1/√(Σw)`. The significance is  `c / σ_c`. The χ² of the fit, `χ² = Σ((D − c)/σ)²` with ndf = 5 − 1    = 4, shows whether a constant describes the points: χ²/ndf around 1 means yes, much larger means the difference changes with momentum.
 
@@ -109,11 +111,11 @@ Question 3:
 | Sets 1–9 (each)            |  20.0% |       20.0% |       20.0% |       20.0% |  20.0% |
 | **Set 10**                 |   1.1% |        6.9% |       33.8% |       58.1% |   0.1% |
 
-e.g. E. coli WT has about 1.79 million bacteria in the 2.68 – 5.87 bin in each of Sets 1–9, but 5.26 million in Set 10; in the > 5.87 bin it has about 1.68 million in each of Sets 1–9, but only 8,032 in Set 10. The sub-sampling method assumes that every file is a repeat of the same measurement, and Set 10 is clearly not: it would be an outlier in the two highest bins (its difference is far too large in the 2.68 – 5.87 bin and almost zero in the > 5.87 bin) and would inflate their uncertainties. The reason for excluding it is its momentum distribution, which does not depend on the WT − mutant result. Set 10's *overall* numbers (sections 4–5) are normal, so it is only excluded from this momentum analysis. The same analysis with all 10 sets is shown at the end for comparison.
+e.g. E. coli WT has about 1.79 million bacteria in the 2.68 – 5.87 bin in each of Sets 1–9, but 5.26 million in Set 10; in the > 5.87 bin it has about 1.68 million in each of Sets 1–9, but only 8,032 in Set 10. The sub-sampling method assumes that every file is a repeat of the same measurement, and Set 10 is not: it would be a clear outlier in the two highest bins (its difference is far too large in the 2.68 – 5.87 bin and almost zero in the > 5.87 bin) and would inflate their uncertainties. The reason for excluding it is its momentum distribution, which does not depend on the WT − mutant result. Set 10's overall numbers are normal, so it is only excluded from this momentum analysis (csv's and png with set 10 is in the repository but not talked about in this file).
 
                                                   RESULTS (Sets 1–9)
 
-*Each point is the mean of Sets 1–9, the error bars are ± 1 standard deviation of the 9 files, the red line is the fitted constant with its ± 1σ band (shaded), and the dashed line is "no difference".*
+Each point is the mean of Sets 1–9, the error bars are ± 1 standard deviation of the 9 files, the red line is the fitted constant with its ± 1σ band (shaded), and the dashed line is "no difference".
 
 Difference per event in each momentum bin:
 
@@ -164,8 +166,8 @@ Fit of a constant through the 5 momentum bins:
 | *Salmonella*               |       0.0000077 ± 0.0000092 | 0.83σ — not significant  | 0.11/4 (1.00)     |
 
                                                             CONCLUSION
-The same three pairs that have a significant overall asymmetry question 2 also show a significant asymmetry across the momentum bins: 
-- E. coli (4.53σ),Pseudomonas aeruginosa(8.17σ) andStreptococcus pneumoniae(4.52σ). For 
+The same three pairs that have a significant overall asymmetry in question 2 also show a significant asymmetry across the momentum bins: 
+- E. coli (4.53σ),Pseudomonas aeruginosa(8.17σ) andStreptococcus pneumoniae(4.52σ). 
 - E. coli a constant describes the points well (χ² 6.49/4): the WT surplus is consistent with being the same at every momentum, although the points do rise from practically zero in the lowest bin to 0.012 per event in the highest, where the individual bins are also significant (3.20σ and 3.51σ). 
 - For P. aeruginosa and S. pneumoniae the χ² is much larger than ndf (48.44/4 and 15.69/4), so a constant does not describe the points: their WT surplus grows with momentum, from 0.0014 to 0.0101 per event for
 - P. aeruginosa and from 0.0003 to 0.0022 for S. pneumoniae. 
@@ -191,8 +193,8 @@ so rare (about 550 bacteria of each form per file, split over 5 bins) that the d
 - **The bins have different widths** (the last one is open-ended), so the
   differences per bin cannot be compared as a rate per unit of momentum.
 
-                                              OVERALL CONCLUSION
-Do we see an asymmetry
+                                              OVERALL CONCLUSIONS
+Do we see an asymmetry?
 
 Overall WT vs mutant (question2): yes, for three of the six pairs.
 
@@ -205,7 +207,7 @@ Overall WT vs mutant (question2): yes, for three of the six pairs.
 | *M. tuberculosis*            |    0.00044 ± 0.00049 | 0.90σ        | no                              |
 | *Salmonella*                 |    0.00004 ± 0.00007 | 0.53σ        | no                              |
 
-In the three significant pairs the WT/normal form is always the more common one. The surplus is small (for *E. coli* about 3 extra WT per 100 events, on top of about 20 of each form per event), but it is seen consistently in the 10 independent files. For the three other pairs, WT and mutant agree within their uncertainty. *B. subtilis* leans towards more WT (1.73σ) but not enough to call it real, and M. tuberculosis and Salmonella are too rarefor such a small difference to be measurable.
+In the three significant pairs the WT/normal form is always the more common one. The surplus is small (for E. coli about 3 extra WT per 100 events, on top of about 20 of each form per event), but it is seen consistently in the 10 independent files. For the three other pairs, WT and mutant agree within their uncertainty. *B. subtilis* leans towards more WT (1.73σ) but not enough to call it real, and M. tuberculosis and Salmonella are too rarefor such a small difference to be measurable.
 
 As a function of momentum Sets 1–9: yes, for the same three pairs.
 
@@ -225,7 +227,7 @@ HOW TO REPRODUCE
 2. Run `Week4_Subsample_Analysis.R` once — analyzes all 10 files (one shared function, looped over each filename) and writes `subsample_results.csv`.
 3. Run `Week4_Deliverable_Code.R` — reads `subsample_results.csv`, combines the 10 sub-samples into the final result above, and writes `final_results.csv`. Runs instantly, since it doesn't re-read the raw data files.
 4. Run `Week4_Asymmetry_Test_Code.R` — reads `subsample_results.csv`, runs the paired-difference asymmetry test for the 6 WT/mutant pairs, and writes`asymmetry_results.csv`. Also runs instantly.
-5. Run `Week5_Momentum_Difference.R`: the momentum analysis. It uses the saved counts per file and bin (`momentum_perfile_results.csv`) and bin boundaries (`momentum_bin_edges.csv`) and runs in a few seconds; otherwise it re-reads all 10 raw data files (about 20 minutes). It writes the results for Sets 1–9 (`momentum_difference_*`). The excluded set is chosen with the setting `excludedSets` at the top of the script.    and, for comparison, for all 10 sets (`momentum_difference_*_all_sets`). The excluded set is chosen with the setting `excludedSets` at the top of the script.
+5. Run `Week5_Momentum_Difference_Code.R`: the momentum analysis. It uses the saved counts per file and bin (`momentum_perfile_results.csv`) and bin boundaries (`momentum_bin_edges.csv`) and runs in a few seconds; otherwise it re-reads all 10 raw data files (about 20 minutes). It writes the results for Sets 1–9 (`momentum_difference_.png`). The excluded set is chosen with the setting `excludedSets` at the top of the script. The comparison, for all 10 sets (`momentum_difference_all_sets.png`). The excluded set is chosen with the setting `excludedSets` at the top of the script.
 
 Files in this repository
 
@@ -234,7 +236,7 @@ Files in this repository
 | `Week4_Subsample_analysis_Code.R`           | Analyzes all 10 data files, writes `subsample_results.csv`                |
 | `Week4_Deliverable_Code.R`                  | Combines the 10 sub-samples into the final result                         |
 | `Week4_Asymmetry_Test_Code.R`               | Paired-difference asymmetry test for the 6 pairs                          |
-| `Week5_Momentum_Difference.R`               | Difference per event as a function of momentum, fit and plots             |
+| `Week5_Momentum_Difference_Code.R`               | Difference per event as a function of momentum, fit and plots             |
 | `subsample_results.csv`                     | Per-file results (10 files x 12 strains, 120 rows)                        |
 | `final_results.csv`                         | Final combined results (12 strains)                                       |
 | `asymmetry_results.csv`                     | Asymmetry test results (6 pairs)                                          |
@@ -245,6 +247,6 @@ Files in this repository
 | `momentum_difference.png`                   | Plot  Sets 1–9                                                            |
 | `momentum_difference_results_all_sets.csv`  | Same as above, all 10 sets (comparison)                                   |
 | `momentum_difference_fit_all_sets.csv`      | Same as above, all 10 sets (comparison)                                   |
-| `momentum_difference_all_sets.png`          | Plot of section 7, all 10 sets (comparison)                               |
+| `momentum_difference_all_sets.png`          | Plot all 10 sets (comparison)                                             |
 | `Week7_FINAL_README.md`                     | This file                                                                 |
 
