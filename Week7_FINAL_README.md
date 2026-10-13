@@ -155,7 +155,8 @@ Difference per event in each momentum bin:
 
 
 Fit of a constant through the 5 momentum bins:
-<img width="2520" height="1540" alt="image" src="https://github.com/user-attachments/assets/ab836ea1-98ef-4f83-8d31-25be91d08dd8" />
+<img width="2520" height="1540" alt="image" src="https://github.com/user-attachments/assets/f4c00d47-c2ab-4c25-9bd1-31a5bc03f11d" />
+
 
 
 | Strain                     | Fitted constant (per event) | Significance             | χ²/ndf (p-value)  |
