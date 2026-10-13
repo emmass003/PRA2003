@@ -2,15 +2,14 @@
 
 # For each of the 6 WT/mutant pairs it draws:
 #   - the difference per event in each momentum bin, with +- SD error bars
-#     (plt.errorbar, like the "graph w/ uncertainties" example)
 #   - the fitted constant as a red line, with its +- 1 sigma uncertainty
-#     as a shaded band (plt.fill_between)
+#     as a shaded band
 #   - a dashed line at zero (= no difference between WT and mutant)
 #
 # HOW TO RUN:
 #   1. Run Week5_momentum_Difference.R first. It writes the CSV files read here.
 #   2. In the same folder: python momentum_difference_plot.py
-#   Needs numpy, pandas and matplotlib (pip install numpy pandas matplotlib).
+#   Needs numpy, pandas and matplotlib (pip install numpy pandas matplotlib --> write this in terminal).
 #
 # Writes:
 #   momentum_difference_py.png           (Sets 1-9, main result)
